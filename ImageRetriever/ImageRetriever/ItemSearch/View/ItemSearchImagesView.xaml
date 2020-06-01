@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:ImageRetriever.ItemSearch.View"
+             mc:Ignorable="d"
+             x:Class="ImageRetriever.ItemSearch.View.ItemSearchImagesView">
+    <ContentPage.Content>
+        <ListView Margin="5,5,5,5"
+                  ItemsSource="{Binding AssetRecordList}" 
+                  HasUnevenRows="True"
+                  ItemTapped="ListView_ItemTapped"
+                  SeparatorColor="#63a3ff">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                
+                            </Grid.RowDefinitions>
+                            <Image Grid.Column="0" Grid.Row="0" 
+                                       Source="{Binding ImageName}"
+                                       HeightRequest="250"
+                                       WidthRequest="250" 
+                                       Aspect="Fill"
+                                       IsVisible ="{Binding HasImage}"/>
+                            <StackLayout Grid.Column="0" Grid.Row="0" Margin="7,0,0,10">
+                                <Label Text="{Binding ID}" 
+                                       HorizontalOptions="Start" 
+                                       VerticalOptions="End"
+                                       FontAttributes="Bold" 
+                                       TextColor="Gray"
+                                       FontSize="Medium" />
+                                <Label Text="{Binding AssetTypeName}" 
+                                       HorizontalOptions="Start" 
+                                       VerticalOptions="End"
+                                       FontAttributes="Bold" 
+                                       TextColor="Gray"
+                                       FontSize="Medium" />
+                                <Label Text="{Binding Description}" 
+                                       HorizontalOptions="Start" 
+                                       VerticalOptions="EndAndExpand"
+                                       FontAttributes="Bold" 
+                                       TextColor="Gray"
+                                       FontSize="Medium" />
+                            </StackLayout>
+                            <Image Source="filledHeart" 
+                                   Grid.Column="0" Grid.Row="0" Margin="7,0,0,10"
+                                   IsVisible="{Binding IsFavorite}"
+                                   HorizontalOptions="End" 
+                                   VerticalOptions="End"/>
+                            <Button Grid.Column="0" Grid.Row="0" Margin="7,0,0,10"
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="End"
+                                    Clicked="DetailedItemSearch"
+                                    ImageSource="expand.png"
+                                    BackgroundColor="Transparent">
+                            </Button>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>

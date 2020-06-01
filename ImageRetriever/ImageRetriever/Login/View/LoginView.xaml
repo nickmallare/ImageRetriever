@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:VM="clr-namespace:ImageRetriever.Login.ViewModel"
+             x:Class="ImageRetriever.Login.View.LoginView">
+    <ContentPage.BindingContext>
+        <VM:LoginViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="settingsIcon.png" Command="{Binding SettingsCommand}" Order="Primary" Priority="1" />
+    </ContentPage.ToolbarItems>
+    <Grid Padding="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+            <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="15" Grid.Row="0" Grid.Column="0">
+                <Image Source="sonariaLogo.png" HeightRequest="160" HorizontalOptions="CenterAndExpand"/>
+                <Label Text="Username:"
+                           HorizontalOptions="Center"/>
+                <Entry Text="{Binding UserName}"  ClearButtonVisibility="WhileEditing"/>
+                <Label Text="Password:" 
+                           HorizontalOptions="Center"/>
+                <Entry Text="{Binding Password}" ClearButtonVisibility="WhileEditing"
+                           IsPassword="True"/>
+            <Button Text="Login" FontSize="12" Command="{Binding LoginCommand}" BackgroundColor="#63a3ff" HeightRequest="40"/>
+                     <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                                        VerticalOptions="Center" Color="Red"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>

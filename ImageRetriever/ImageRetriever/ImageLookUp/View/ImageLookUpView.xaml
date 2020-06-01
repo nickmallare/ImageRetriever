@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ImageRetriever.ImageLookUp.View.ImageLookUpView"
+             IconImageSource="explore.png"
+             Title="Scan Item">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" VerticalOptions="Center" Spacing="10">
+            <Label Text="{Binding Name}" FontSize="Medium" FontAttributes="Bold"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+     <Grid>
+         <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+     <ScrollView VerticalOptions="Fill" HorizontalOptions="Fill" Grid.Column="0" Grid.Row="0">
+        <StackLayout Margin="15">
+            <Entry Text="{Binding BarCodeID}" IsVisible="{Binding DefaultSearch}"/>
+            <Button Text="Search" Command="{Binding SearchCommand}" BackgroundColor="#63a3ff" IsVisible="{Binding DefaultSearch}"/>
+            <StackLayout BackgroundColor="LightGray" IsVisible="{Binding SearchComplete}">
+                <Label Text="{Binding Location}"/>
+                <Label Text="{Binding Dimensions}"/>
+                <Label Text="{Binding Weight}"/>
+                <Label Text="{Binding Description}" IsVisible="{Binding ShowDetails}"/>
+                <Label Text="{Binding Barcode}" IsVisible="{Binding ShowDetails}"/>
+                <Label Text="{Binding Status}" IsVisible="{Binding ShowDetails}"/>
+                <Label Text="{Binding Type}" IsVisible="{Binding ShowDetails}"/>
+                <Label Text="{Binding ZoneName}" IsVisible="{Binding ShowDetails}"/>
+                <Label Text="{Binding Color}" IsVisible="{Binding ShowDetails}"/>
+                <Label Text="{Binding CreatedOn}" IsVisible="{Binding ShowDetails}"/>
+                <StackLayout Orientation="Horizontal">
+                    <Button Text="Details" Command="{Binding DetailsCommand}" 
+                            VerticalOptions="Start"
+                            HorizontalOptions="Start"
+                            BackgroundColor="Transparent"/>
+                    <Button Command="{Binding FavoriteCommand}"
+                            VerticalOptions="EndAndExpand"
+                            HorizontalOptions="EndAndExpand"
+                            ImageSource="{Binding ChangeFavoriteImage}"
+                            BackgroundColor="Transparent"/>
+                </StackLayout>
+            </StackLayout>
+            <Grid Padding="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <ListView Margin="5,5,5,5" 
+                  ItemsSource="{Binding ImageList}" 
+                  HasUnevenRows="True">
+                    <ListView.ItemTemplate Grid.Column="0" Grid.Row="0" >
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Padding="5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.Column="0" Grid.Row="0" 
+                                       Source="{Binding URL}"
+                                       HeightRequest="250"
+                                       WidthRequest="250" 
+                                       Aspect="Fill"/>
+                                    <Label Grid.Column="0" Grid.Row="0" Margin="7,0,0,10"
+                                       Text="{Binding ID}" 
+                                       HorizontalOptions="Start" 
+                                       VerticalOptions="End"
+                                       FontAttributes="Bold" 
+                                       TextColor="White"
+                                       FontSize="Medium"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </StackLayout>
+            </ScrollView>
+           <Button WidthRequest="60" HeightRequest="60" BorderRadius="30" Grid.Column="0" Grid.Row="0"  
+                    HorizontalOptions="End" 
+                    VerticalOptions="End" 
+                    BackgroundColor="#63a3ff"
+                    Command="{Binding CameraCommand}" ImageSource="smallBarcode.png" IsVisible="{Binding DefaultSearch}"/>
+          <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                                        VerticalOptions="Center" Color="Red" Grid.Column="0" Grid.Row="0"/>
+          </Grid>
+    </ContentPage.Content>
+</ContentPage>

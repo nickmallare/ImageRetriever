@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ImageRetriever.ItemSearch.View.ItemSearchView"
+             IconImageSource="filter.png"
+             Title="Filter Items">
+    <ContentPage.Content>
+        <Grid>
+             <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"></RowDefinition>
+                </Grid.RowDefinitions>
+        <StackLayout Grid.Column="0" Grid.Row="0">
+            <StackLayout Margin="15">
+                <Entry Text="{Binding Name}" TextColor="Gray" ClearButtonVisibility="WhileEditing" />
+                <Picker Title="Status" ItemsSource="{Binding StatusList}" SelectedItem="{Binding SelectedStatus}"/>
+                <Picker Title="Location" ItemsSource="{Binding LocationList}" SelectedItem="{Binding SelectedLocation}"/>
+                <Picker Title="Item Type" ItemsSource="{Binding AssetTypesList}" SelectedItem="{Binding SelectedType}"/>
+                <Button Text="Search Items" BackgroundColor="#63a3ff" Command="{Binding SearchCommand}"/>
+                <Button Text="Reset Search" BackgroundColor="#63a3ff" Command="{Binding ResetSearchCommand}"/>
+                <Grid Padding="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                        <Picker Title="Item Attributes" ItemsSource="{Binding AttributesPickerCollection}"
+                                ItemDisplayBinding="{Binding ControlLabelText}"
+                                SelectedItem="{Binding SelectedAttribute, Mode=TwoWay}"
+                                SelectedIndex="{Binding SelectedIndex}"
+                                HorizontalOptions="Start"
+                                Grid.Column="0"
+                                />
+                        <Picker Title="Operator"
+                                ItemsSource="{Binding OperatorNamePickerCollection}"
+                                ItemDisplayBinding="{Binding OperatorName}"
+                                SelectedItem="{Binding SelectedOperator}"
+                                Grid.Column="1"
+                                />
+                        <Entry Text="{Binding AttributeValue}"
+                               
+                               Grid.Column="2"
+                               />
+                        <Button ImageSource="add.png"
+                                Command="{Binding AddCommand}"
+                                BackgroundColor="Transparent"
+                                Grid.Column="3"
+                                />
+                </Grid>
+                <ListView ItemsSource="{Binding ListOfCustomFieldsFilterData}" x:Name="Test">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell IsEnabled="False">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding FieldName}" FontSize="Medium"/>
+                                    <Label Text="{Binding OperatorName}" FontSize="Medium"/>
+                                    <Label Text="{Binding Value}" FontSize="Medium"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            </StackLayout>
+             <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" 
+                                        VerticalOptions="Center" Color="Red" Grid.Column="0" Grid.Row="0"/>
+            </Grid>
+    </ContentPage.Content>
+</ContentPage>
+
+
+
