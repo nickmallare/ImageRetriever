@@ -78,11 +78,21 @@
             </Grid>
         </StackLayout>
             </ScrollView>
-           <Button WidthRequest="60" HeightRequest="60" BorderRadius="30" Grid.Column="0" Grid.Row="0"  
+
+           <Button WidthRequest="60" HeightRequest="60" BorderRadius="30" Grid.Column="0" Grid.Row="0"
+                    Margin="0,0,5,5"
                     HorizontalOptions="End" 
                     VerticalOptions="End" 
                     BackgroundColor="#63a3ff"
                     Command="{Binding CameraCommand}" ImageSource="smallBarcode.png" IsVisible="{Binding DefaultSearch}"/>
+
+           <Button WidthRequest="60" HeightRequest="60" BorderRadius="30" Grid.Column="0" Grid.Row="0"
+                    Margin="5,0,0,5"
+                    HorizontalOptions="Start" 
+                    VerticalOptions="End" 
+                    BackgroundColor="#63a3ff"
+                    Command="{Binding AddPhotoCommand}" ImageSource="addPhoto.png" IsVisible="{Binding DefaultSearch}"/>
+
           <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
                                         VerticalOptions="Center" Color="Red" Grid.Column="0" Grid.Row="0"/>
           </Grid>

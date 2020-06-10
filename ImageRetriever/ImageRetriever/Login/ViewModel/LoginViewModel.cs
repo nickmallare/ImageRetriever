@@ -1,7 +1,9 @@
 ﻿using ImageRetriever.Common;
 using ImageRetriever.ImageLookUp.View;
+using ImageRetriever.ImageUpdate.View;
 using ImageRetriever.Login.Models;
 using ImageRetriever.SelectionMenu.View;
+using Plugin.Media;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,6 +28,7 @@ namespace ImageRetriever.Login.ViewModel
         public LoginViewModel()
         {
 
+
             UserName = "nicholasm@sontosocorp.onmicrosoft.com";
             Password = "Inspiron700m@";
 
@@ -46,13 +49,14 @@ namespace ImageRetriever.Login.ViewModel
                          IsBusy = true;
                          try
                          {
-                                 
-                                 await SetUserAuthTokenAsync();
+
+                             await SetUserAuthTokenAsync();
                              if (SessionObjects.Token != "")
                              {
                                  if (loginSuccess)
                                  {
                                      await Application.Current.MainPage.Navigation.PushModalAsync(new SelectionMenuView());
+                                     //await Application.Current.MainPage.Navigation.PushModalAsync(new ImageUpdateView());
                                  }
                              }
                              else
@@ -81,6 +85,7 @@ namespace ImageRetriever.Login.ViewModel
                     });
 
         }
+
         public async Task SetUserAuthTokenAsync()
         {
             try

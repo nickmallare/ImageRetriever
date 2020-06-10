@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/nickmallare/Desktop/ImageRetriever 23-13-23-174/ImageRetriever/ImageRetriever/ImageRetriever.csproj": {}
+    "/Users/nickmallare/Projects/ImageRetriever/ImageRetriever/ImageRetriever/ImageRetriever.csproj": {}
   },
   "projects": {
-    "/Users/nickmallare/Desktop/ImageRetriever 23-13-23-174/ImageRetriever/ImageRetriever/ImageRetriever.csproj": {
+    "/Users/nickmallare/Projects/ImageRetriever/ImageRetriever/ImageRetriever/ImageRetriever.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/nickmallare/Desktop/ImageRetriever 23-13-23-174/ImageRetriever/ImageRetriever/ImageRetriever.csproj",
+        "projectUniqueName": "/Users/nickmallare/Projects/ImageRetriever/ImageRetriever/ImageRetriever/ImageRetriever.csproj",
         "projectName": "ImageRetriever",
-        "projectPath": "/Users/nickmallare/Desktop/ImageRetriever 23-13-23-174/ImageRetriever/ImageRetriever/ImageRetriever.csproj",
+        "projectPath": "/Users/nickmallare/Projects/ImageRetriever/ImageRetriever/ImageRetriever/ImageRetriever.csproj",
         "packagesPath": "/Users/nickmallare/.nuget/packages/",
-        "outputPath": "/Users/nickmallare/Desktop/ImageRetriever 23-13-23-174/ImageRetriever/ImageRetriever/obj/",
+        "outputPath": "/Users/nickmallare/Projects/ImageRetriever/ImageRetriever/ImageRetriever/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
@@ -48,6 +48,14 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[12.0.3, )"
+            },
+            "Plugin.Permissions": {
+              "target": "Package",
+              "version": "[3.0.0.12, )"
+            },
+            "Xam.Plugin.Media": {
+              "target": "Package",
+              "version": "[5.0.1, )"
             },
             "Xamarin.Essentials": {
               "target": "Package",

@@ -1,5 +1,9 @@
-﻿using ImageRetriever.Common;
+﻿
+using ImageRetriever.Common;
 using ImageRetriever.Common.Models;
+using ImageRetriever.ImageUpdate.View;
+using Newtonsoft.Json;
+using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -30,7 +34,6 @@ namespace ImageRetriever.ImageLookUp.ViewModel
         private bool defaultSearch;
         private bool isBusy;
 
-   
         private string barcodeID;
         private ObservableCollection<Image> imageList = new ObservableCollection<Image>();
         private ObservableCollection<string> attributeList = new ObservableCollection<string>();
@@ -40,15 +43,16 @@ namespace ImageRetriever.ImageLookUp.ViewModel
         public ICommand DetailsCommand { private set; get; }
         public ICommand FavoriteCommand { private set; get; }
         public ICommand SearchCommand { private set; get; }
+        public ICommand AddPhotoCommand { private set; get; }
         ProcessAsset processAsset = new ProcessAsset();
         public ImageLookUpViewModel(string name)
         {
-           
+
             if (name == null)
             {
                 DefaultSearch = true;
             }
-            else if(name == "default")
+            else if (name == "default")
             {
                 DefaultSearch = true;
             }
@@ -72,7 +76,7 @@ namespace ImageRetriever.ImageLookUp.ViewModel
                          {
                              Application.Current.MainPage.Navigation.PopModalAsync();
                              TagID = result.Text;
-                            
+
                              assetInfo = processAsset.GetAssetInfoFromTag(TagID);
                              ProcessSearch();
                          });
@@ -118,13 +122,13 @@ namespace ImageRetriever.ImageLookUp.ViewModel
                  });
 
             SearchCommand = new Command(
-                 execute:  () =>
+                 execute: () =>
                  {
                      IsBusy = true;
                      if (barcodeID != null)
                      {
                          assetInfo = processAsset.GetAssetInfoFromTag(BarCodeID);
-                         if(ImageList.Count > 0)
+                         if (ImageList.Count > 0)
                          {
                              ImageList.Clear();
                          }
@@ -136,46 +140,112 @@ namespace ImageRetriever.ImageLookUp.ViewModel
                  {
                      return true;
                  });
+            AddPhotoCommand = new Command(
+                 execute: async () =>
+                 {
+                     if (assetInfo != null)
+                     {
+                         await Application.Current.MainPage.Navigation.PushModalAsync(new ImageUpdateView(assetInfo.ID));
+                     }
+                 },
+                 canExecute: () =>
+                 {
+                     return true;
+                 });
 
-            
+            MessagingCenter.Subscribe<ImageUpdateView, string[]>(this, "imagePath", (sender, httpAndImagePath) =>
+            {
+                try
+                {
+                    var blobInfo = JsonConvert.DeserializeObject<BlobInformation>(httpAndImagePath[0]);
+                    var imageNamesFromBlob = blobInfo.Result.Split(',');
+                    var pathNameForImageFromBlob = imageNamesFromBlob[0];
+
+                    //have to insert image at the start of list or it doesnt update properly
+                    ImageList.Insert(0, new Image(httpAndImagePath[1], assetInfo.ID));
+
+                    var postObj = processAsset.CreateSaveAssetObj(assetInfo.AssetTypeID, assetInfo.ID);
+                    ImagesName pictureToAdd = new ImagesName(pathNameForImageFromBlob, "test", true, blobInfo.BlobUrl.ToString().TrimStart('{').TrimEnd('}'));
+                    if (postObj.ImagesNames == null)
+                    {
+                        postObj.ImagesNames = new System.Collections.Generic.List<ImagesName>();
+                    }
+                    else
+                    {
+                        foreach (var x in postObj.ImagesNames)
+                        {
+                            if (x.IsPrimary == true)
+                            {
+                                x.IsPrimary = false;
+                            }
+                        }
+                        foreach(var assetFieldValue in postObj.AssetFieldValueViewModel)
+                        {
+                            assetFieldValue.IsReadOnly = "";
+                            assetFieldValue.FieldValue = "";
+                        }
+                    }
+                    postObj.ImagesNames.Insert(0, pictureToAdd);
+                    postObj.PrimaryImageId = postObj.ImagesNames[0].ImageName;
+                    postObj.AssetTags[0].ModifiedBy = null;
+                    postObj.AssetTags[0].ModifiedOn = null;
+                    processAsset.UpdateImagesInBlob(postObj.ImagesNames);
+                    var test = processAsset.ConfigureHttpClient("api/assets/SaveAsset", true, "POST", postObj);
+                
+                    var test2 = processAsset.ConfigureHttpClient("api/ConfigurationSettings.GetConfigValueByKey/ShowAssetImageOnItemList", true, "GET", null);
+
+                }
+                catch (Exception ex)
+                {
+                    //log error
+                }
+            });
         }
+
         public ImageLookUpViewModel() { }
-        
+
         public void ProcessSearch()
         {
-            if (assetInfo != null)
+            try
             {
-                if(assetInfo.IsFavorite == false)
+                if (assetInfo != null)
                 {
-                    ChangeFavoriteImage = heartImage;
+                    if (assetInfo.IsFavorite == false)
+                    {
+                        ChangeFavoriteImage = heartImage;
+                    }
+                    else
+                    {
+                        ChangeFavoriteImage = filledHeartImage;
+                    }
+                    SearchComplete = true;
+                    SessionObjects.BaseImageURL = assetInfo.BlobUrl;
+                    Location = assetInfo.LocationName;
+                    Name = assetInfo.Name;
+                    var imageNamesList = processAsset.GetImagesForAsset(assetInfo.ID);
+                    foreach (var x in imageNamesList)
+                    {
+                        ImageList.Add(new Image(SessionObjects.BaseImageURL + x.ImageName, assetInfo.ID));
+                    }
+                    var attributesList = processAsset.GetCustomAttributes(assetInfo.AssetTypeID, assetInfo.ID);
+                    if (attributesList != null)
+                    {
+                        SetCustomAttributes(attributesList);
+                    }
+
+
                 }
                 else
                 {
-                    ChangeFavoriteImage = filledHeartImage;
+                    MessagingCenter.Send<ImageLookUpViewModel>(this, "NoImage");
+                    TagID = "";
+                    SearchComplete = false;
+                    ShowDetails = false;
                 }
-                SearchComplete = true;
-                SessionObjects.BaseImageURL = assetInfo.BlobUrl;
-                Location = assetInfo.LocationName;
-                Name = assetInfo.Name;
-                var imageNamesList = processAsset.GetImagesForAsset(assetInfo.ID);
-                foreach (var x in imageNamesList)
-                {
-                    ImageList.Add(new Image(SessionObjects.BaseImageURL + x.ImageName, assetInfo.ID));
-                }
-                var attributesList = processAsset.GetCustomAttributes(assetInfo.AssetTypeID, assetInfo.ID);
-                if(attributesList != null)
-                {
-                    SetCustomAttributes(attributesList);
-                }
-             
-               
             }
-            else
+            catch(Exception ex)
             {
-                MessagingCenter.Send<ImageLookUpViewModel>(this, "NoImage");
-                TagID = "";
-                SearchComplete = false;
-                ShowDetails = false;
+                var test = ex.Message;
             }
         }
         public void SetItemDetails(AssetRecord asset)
@@ -190,21 +260,21 @@ namespace ImageRetriever.ImageLookUp.ViewModel
         }
         public void SetCustomAttributes(ObservableCollection<AssetFieldValueViewModel> attributeList)
         {
-            foreach(var item in attributeList)
+            foreach (var item in attributeList)
             {
-                if(item.Name == "Length")
+                if (item.Name == "Length")
                 {
                     Dimensions = "L" + item.FieldValue + "\"";
                 }
-                else if(item.Name == "Width")
+                else if (item.Name == "Width")
                 {
                     Dimensions = Dimensions + " x W" + item.FieldValue + "\"";
                 }
-                else if(item.Name == "Heighted")
+                else if (item.Name == "Heighted")
                 {
                     Dimensions = Dimensions + " x H" + item.FieldValue + "\"";
                 }
-                else if(item.Name == "Weight")
+                else if (item.Name == "Weight")
                 {
                     Weight = item.FieldValue;
                 }
@@ -223,7 +293,7 @@ namespace ImageRetriever.ImageLookUp.ViewModel
                 RaisePropertyChanged(nameof(IsBusy));
             }
         }
-      
+
         public string TagID
         {
             get
@@ -379,7 +449,7 @@ namespace ImageRetriever.ImageLookUp.ViewModel
         {
             get
             {
-                return "Weight: "+ weight;
+                return "Weight: " + weight;
             }
             set
             {

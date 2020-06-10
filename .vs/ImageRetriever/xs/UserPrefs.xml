@@ -1,0 +1,64 @@
+﻿<Properties StartupConfiguration="{DD6AA795-4F0B-4AAA-BCFF-5B1904CF9FEF}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ImageRetriever/ImageRetriever/ImageLookUp/ViewModel/ImageLookUpViewModel.cs">
+    <Files>
+      <File FileName="ImageRetriever/ImageRetriever/Common/Models/Image.cs" Line="19" Column="1" IsPinned="True" />
+      <File FileName="ImageRetriever/ImageRetriever/ImageLookUp/ViewModel/ImageLookUpViewModel.cs" Line="200" Column="32" />
+      <File FileName="ImageRetriever/ImageRetriever/ImageUpdate/View/ImageUpdateView.xaml.cs" />
+      <File FileName="ImageRetriever/ImageRetriever/Common/ProcessAsset.cs" Line="29" Column="1" NotebookId="1" />
+      <File FileName="ImageRetriever/ImageRetriever/Common/DataRequest.cs" NotebookId="1" />
+      <File FileName="ImageRetriever/ImageRetriever/Login/ViewModel/LoginViewModel.cs" NotebookId="1" />
+      <File FileName="ImageRetriever/ImageRetriever/Common/ImageUpdater.cs" NotebookId="1" />
+      <File FileName="ImageRetriever/ImageRetriever/Common/Models/DetailedAssetInformation.cs" NotebookId="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ImageRetriever" expanded="True">
+            <Node name="ImageRetriever" expanded="True">
+              <Node name="Common" expanded="True">
+                <Node name="Models" expanded="True" />
+              </Node>
+              <Node name="ImageLookUp" expanded="True">
+                <Node name="ViewModel" expanded="True">
+                  <Node name="ImageLookUpViewModel.cs" selected="True" />
+                </Node>
+              </Node>
+              <Node name="ImageUpdate" expanded="True">
+                <Node name="View" expanded="True">
+                  <Node name="ImageUpdateView.xaml" expanded="True" />
+                </Node>
+                <Node name="ViewModel" expanded="True" />
+              </Node>
+              <Node name="ItemSearch" expanded="True">
+                <Node name="View" expanded="True">
+                  <Node name="ItemSearchImagesView.xaml" expanded="True" />
+                  <Node name="ItemSearchView.xaml" expanded="True" />
+                </Node>
+                <Node name="ViewModel" expanded="True" />
+              </Node>
+              <Node name="Login" expanded="True">
+                <Node name="ViewModel" expanded="True" />
+              </Node>
+              <Node name="SelectionMenu" expanded="True">
+                <Node name="View" expanded="True">
+                  <Node name="SelectionMenuView.xaml" expanded="True" />
+                </Node>
+                <Node name="ViewModel" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="ImageRetriever.Android" expanded="True" />
+            <Node name="ImageRetriever.iOS" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.ImageRetriever.Android PreferredExecutionTarget="Android.Nexus_6_API_29" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.ImageRetriever.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.AD5F9C75-DE2D-42B6-8DE4-8F3D916E5BF0" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

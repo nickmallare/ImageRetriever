@@ -16,6 +16,8 @@
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
     <PackageReference Include="Xamarin.Forms" Version="4.6.0.726" />
+    <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
+    <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,5 +47,8 @@
   <ItemGroup>
     <Folder Include="SelectionMenu\Models\" />
     <Folder Include="Settings\Model\" />
+    <Folder Include="ImageUpdate\" />
+    <Folder Include="ImageUpdate\View\" />
+    <Folder Include="ImageUpdate\ViewModel\" />
   </ItemGroup>
 </Project>

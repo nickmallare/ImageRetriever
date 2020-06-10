@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using ImageRetriever.Common.Models;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -75,9 +77,21 @@ namespace ImageRetriever.Common
             }
             catch (Exception ex)
             {
+               
 
             }
             return responseString;
         }
+        public void UpdateImagesInBlob(List<ImagesName> listOfImages)
+        {
+            var client = new HttpClient();
+            client.Timeout = new TimeSpan(0, 0, 30);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var response = client.GetAsync(listOfImages[0].BlobUrl + listOfImages[0].ImageName).Result;
+           
+
+
+        }
+
     }
 }

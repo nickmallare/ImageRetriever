@@ -64,6 +64,7 @@
     <MtouchArch>ARM64</MtouchArch>
     <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>iOS Team Provisioning Profile: com.companyname.ImageRetriever</CodesignProvision>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -134,6 +135,12 @@
     <PackageReference Include="Xamarin.Forms">
       <Version>4.6.0.726</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugin.Media">
+      <Version>5.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Plugin.Permissions">
+      <Version>3.0.0.12</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -156,5 +163,6 @@
     <BundleResource Include="settingsIcon.png" />
     <BundleResource Include="smallBarcode.png" />
     <BundleResource Include="sonariaLogo.png" />
+    <BundleResource Include="addPhoto.png" />
   </ItemGroup>
 </Project>

@@ -76,6 +76,21 @@ namespace ImageRetriever.Common
 
             return returnAssetinfo;
         }
+
+        //Test function for creating POST body for /saveasset api call
+
+        public DetailedAssetInformation CreateSaveAssetObj(string TypeID, string ID)
+        {
+            var returnObj = new DetailedAssetInformation();
+            var response = base.ConfigureHttpClient("api/assettypes/RenderFormByAssetType/" + TypeID + "/" + ID, true, "GET", null);
+            if (response != "")
+            {
+                 returnObj = JsonConvert.DeserializeObject<DetailedAssetInformation>(response);
+            }
+            return returnObj;
+        }
+
+
         public ObservableCollection<AssetFieldValueViewModel> GetCustomAttributes(string TypeID, string ID)
         {
             ObservableCollection<AssetFieldValueViewModel> returnList = new ObservableCollection<AssetFieldValueViewModel>();
@@ -102,10 +117,7 @@ namespace ImageRetriever.Common
 
                     if (asset.AssetRecords.Count() != 0)
                     {
-                        // Current Work: API call has been updated by sonaria and now returns attributes!!!!!
-                        // Less work! But more work fixing it
-                        //SessionObjects.BaseImageURL = asset.AssetRecords.FirstOrDefault(x => x.BlobUrl != null).BlobUrl;
-
+                      
                         foreach (var assetFromResponse in asset.AssetRecords)
                         {
                             rtnList.Add(assetFromResponse);
@@ -140,7 +152,16 @@ namespace ImageRetriever.Common
             }
             return rtnList;
         }
-   
+        public string GetBlobUrl(AssetRecord asset)
+        {
+            if (asset.BlobUrl != "")
+            {
+                return asset.BlobUrl;
+            }
+            return "";
+        }
+
+
     }
 }
     
